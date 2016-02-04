@@ -1,0 +1,456 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title id="tit">Exiled To Wild</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	
+ </head>
+<style>
+body {
+    background: url({{ MEDIA_URL }}wallpaper.jpg) no-repeat fixed center center;
+    background-size: cover;
+    font-family: Montserrat;
+}
+</style>
+<body>	<div id="logo" style="margin-left:22%">
+	<img src="{{ MEDIA_URL }}logo.png">
+	</div>
+	<h2 hidden="true">
+		WELCOME <div id=username value="{{username}}">{{username}}</div>
+	</h2>
+	<h5 hidden="true">
+		Last Login : {{lastlogin}}
+	</h5>
+		
+		<div class="container-float" style="margin-left:0px;">
+		<div class="col-sm-1 ">
+			<div class="row" style="margin-left:20%">
+				 <div class="row" id="row12"style="border-top-left-radius:20% ;background-color:gold"></div>
+				 <div class="row" id="row13"style="background-color:#faf451"></div>
+				 <div class="row" id="row14"style="background-color:gold"></div>	
+				 <div class="row" id="row15"style="background-color:#faf451"></div>
+				 <div class="row" id="row16"style="background-color:gold"></div>
+		 		 <div class="row" id="row17"style="border-bottom-left-radius:20% ;background-color:#faf451"></div>
+				 </br>
+				 </br>
+				<div class ="row"><form style="text-align:center;"  method="" action="/logout/">
+			{% csrf_token %}
+			<input type="submit" style=" background-color:gold; " name="logout" value="logout"/>
+		</form></div>
+			</div>
+		</div>
+
+		<div class="col-sm-7" style="background:url({{MEDIA_URL}}map.jpg);border:5px groove gold;margin-left:10px">
+		 <div class="row" id="row1"></div>
+		 <div class="row" id="row2"></div>	
+		 <div class="row" id="row3"></div>
+		 <div class="row" id="row4"></div>
+		 <div class="row" id="row5"></div>
+		 <div class="row" id="row6"></div>	
+		 <div class="row" id="row7"></div>
+		 <div class="row" id="row8"></div>
+		 <div class="row" id="row9"></div>
+		 <div class="row" id="row10"></div>	
+		 <div class="row" id="row11"></div>
+		 
+		</div>
+	</div>
+	<div class="col-sm-3 ">
+		<div class="row" style="margin-left:20%">
+				<div class="row" id="row18"style="border-top-left-radius:20%;border-top-right-radius:20%;background-color:gold"></div>	
+				 <div class="row" id="row19"style="border-left-radius:20%;border-right-radius:20%;background-color:#faf451" ></div>
+				 <div class="row" id="row20"style="background-color:gold"></div>
+				 <div class="row" id="row21"style="background-color:#faf451"></div>
+				 <div class="row" id="row22"style="background-color:gold"></div>	
+				 <div class="row" id="row23"style="background-color:#faf451"></div>
+				 <div class="row" id="row24"style="background-color:gold"></div>
+		</div>
+	    <div class="row">
+   </br>
+</br>
+</br>
+    <div class="btn-group" role="group" aria-label="..." style="margin-left:15%">
+  <button type="button" class="btn btn-default" id="cutButton">CUT</button>
+  <button type="button" class="btn btn-default" id="attackButton">ATTACK</button>
+  <button type="button" class="btn btn-default" id="takeButton">TAKE</button>
+<button type="button" class="btn btn-default" id="sleepButton">SLEEP</button>
+
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      SELECT
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a  id="selectAxeButton">AXE</a></li>
+      <li><a  id="selectDaggerButton">DAGGER</a></li>
+      <li><a  id="selectSwordButton">SWORD</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+<br>
+    <div class="row">
+
+<div class="btn-group btn-group" role="group" aria-label="...">
+<div class="btn-group-justified" style="margin-left:47%"> 
+  <button type="button" class="btn btn-default glyphicon glyphicon-arrow-up" id="upButton" style="width:22.5%"></button>
+</div>
+<div class="btn-group-justified" style="margin-left:25%">
+  <button type="button" class="btn btn-default glyphicon glyphicon-arrow-left" id="leftButton" style="width:22.5%"></button>
+  <button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" id="downButton" style="width:22.5%"></button>
+  <button type="button" class="btn btn-default glyphicon glyphicon-arrow-right" id="rightButton" style="width:22.5%"></button>
+</div>
+</div>
+</div>
+
+   <div class="row">
+<br>
+
+<button type="button" class="btn btn-default btn-lg" id="moveButton" style="border-radius: 100%;  background-color:gold;margin-left:45%; height:10%">MOVE</button>
+</div>
+
+</div>
+</div>
+<div class="row">
+	
+</div>	
+<script> 
+$(document).ready(function(){
+	var flag=true;
+	 function getCookie(c_name) {
+		if(document.cookie.length > 0) {
+		    c_start = document.cookie.indexOf(c_name + "=");
+		    if(c_start != -1) {
+		        c_start = c_start + c_name.length + 1;
+		        c_end = document.cookie.indexOf(";", c_start);
+		        if(c_end == -1) c_end = document.cookie.length;
+		        return unescape(document.cookie.substring(c_start,c_end));
+		    }
+		}
+		return "";
+	    };
+	function clearText(){
+		document.getElementById("row20").innerHTML="";
+		document.getElementById("row21").innerHTML="";
+		document.getElementById("row22").innerHTML="";
+		document.getElementById("row23").innerHTML="";
+		document.getElementById("row24").innerHTML="";
+	}
+	function writeMap(data){
+		var count=1;
+		var direction=data.interf[13].slice(data.interf[13].indexOf(":")+1);
+		console.log(direction);
+		var userx;
+		var usery;
+		for (var i in data.interf){
+			var row=data.interf[i];
+			if(count<12){
+			row="";
+			
+			var parCloserIndex;
+			var rcount=1;
+			
+			for(var t in data.interf[i]){
+				var health="_";
+				var name="";
+				row+="<div id=\"col"+rcount+"\" class=\"col-sm-1\" style=\"width:65px\"><img src=\"{{ MEDIA_URL }}";
+				if(data.interf[i][t]=="."){
+					row+="grass-icon-11100.png\"";
+				}
+				else if(data.interf[i][t].indexOf("|")>=0){
+					
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="Farm-Fresh_tree.png\"";
+				}
+				else if(data.interf[i][t].indexOf("Lake")>=0){
+					row+="icon_water.png\"";
+				}
+				else if(data.interf[i][t].indexOf("Wolf")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="wolf.gif\"";
+				}
+				else if(data.interf[i][t].indexOf("Python")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="snake.gif\"";
+				}
+				else if(data.interf[i][t].indexOf("Bison")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="bison.gif\"";
+				}
+				else if(data.interf[i][t].indexOf("T-Rex")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="t-rex.gif\"";
+				}
+				else if(data.interf[i][t].indexOf("Axe")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="axe.png\"";
+				}
+				else if(data.interf[i][t].indexOf("Dagger")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="knife.gif\"";
+				}
+				else if(data.interf[i][t].indexOf("Sword")>=0){
+					health="<b style=\"color:black\">"+data.interf[i][t].slice(data.interf[i][t].indexOf("("),data.interf[i][t].indexOf(")")+1)+"</b>";
+					row+="sword.gif\"";
+				}
+
+				else if (document.getElementById("username").innerHTML.toString()==data.interf[i][t]){
+					name="<b style=\"color:blue\">"+data.interf[i][t]+"</b>";
+					if(direction=="Left"){
+						userx=count;
+						usery=rcount-1;
+					}
+					else if(direction=="Right"){
+						userx=count;
+						usery=rcount+1;
+					}
+					else if(direction=="Up"){
+						userx=count-1;
+						usery=rcount;
+					}
+					else if(direction=="Down"){
+						userx=count+1;
+						usery=rcount;
+					}
+
+					
+					
+					row+="warrior.gif\"";
+				}
+				else{
+
+					name="<b style=\"color:red\">"+data.interf[i][t]+"</b>";
+					row+="warrior.gif\"";
+				}
+				if(name!="") health="";
+				row+="width=\"32px\" height=\"32px\">"+name+health+"</div>";
+				rcount++;
+				}
+				
+	      		
+			
+			}
+			else{
+				var str1=data.interf[i].slice(0,data.interf[i].indexOf(":"));
+				var str2=data.interf[i].slice(data.interf[i].indexOf(":")+1);
+				if(data.interf[i].indexOf("[")>=0) str1="";
+				
+				row="<div style='text-align:center'><h4><b>"+str1+"</b></h4><h5>"+str2+"</h5></div>";
+				if(count>=20) row="<div style='text-align:center'><h5>"+data.interf[i]+"</h5></div>";
+			}
+			document.getElementById("row"+(count).toString()).innerHTML=row;
+			count++;
+			
+		}
+		document.getElementById("row"+(userx).toString()).children[usery-1].style.backgroundColor="#ff3434";
+
+	}
+	$.ajaxSetup({
+	    headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+	});
+	$("#logout").click(function(){
+		flag=false;
+	});
+	$("#upButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "turn Up",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#downButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "turn Down",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#rightButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "turn Right",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#leftButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "turn Left",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#moveButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "move",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#cutButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "cut",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#attackButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "attack",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#takeButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "take",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#selectAxeButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "select Axe",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#selectDaggerButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "select Dagger",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#selectSwordButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "select Sword",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	$("#sleepButton").click(function(){
+		
+        	$.post("/map/",
+		{
+		  command: "sleep",
+		  
+		},
+		function(data,status){
+		   writeMap(data);
+		
+		});
+		 
+		clearText();
+		
+    	});
+	(function worker() {
+	  if(flag){
+	  $.ajax({
+	    url: '/map', 
+	    success: function(data) {
+		writeMap(data);
+	    },
+	    complete: function() {
+	      setTimeout(worker, 1000);
+	    }
+	  });
+	}})();
+});
+</script>	
+	</body>
+</html>

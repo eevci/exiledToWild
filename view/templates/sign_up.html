@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Exiled To Wild</title>
+	</head>
+	<style>
+body {
+    background: url('{{MEDIA_URL}}wallpaper.jpg') no-repeat fixed center center;
+    background-size: cover;
+    font-family: Montserrat;
+}
+
+.logo {
+    width: 751px;
+    height: 123px;
+    background: url('{{MEDIA_URL}}logo.png') no-repeat;
+    margin: 30px auto;
+}
+
+.signup-block {
+    width: 320px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px; 
+    border-top: 5px solid #7f8000;
+    margin: 0 auto;
+}
+
+.signup-block h1 {
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.signup-block input {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #7f8000;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-family: Montserrat;
+    padding: 0 20px 0 50px;
+    outline: none;
+}
+
+.signup-block input#password {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.signup-block input#password:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.signup-block input#cpassword {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.signup-block input#cpassword:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.signup-block input:active, .signup-block input:focus {
+    border: 1px solid #e5e600;
+}
+
+.signup-block button {
+    width: 100%;
+    height: 40px;
+    background: #e5e600;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #7f8000;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: Montserrat;
+    outline: none;
+    cursor: pointer;
+}
+
+.signup-block button:hover {
+    background: #7f8000;
+}
+
+</style>
+	<body>
+		<div class="logo"></div>
+
+<div class="signup-block" style="margin-top:75px">
+<form style="text-align:center;"  method="post" action="signup_post/">
+    <h1>REGISTRATION</h1>
+    <input type="text" value="" placeholder="First Name" id="firstname" name="firstname" />
+    <input type="text" value="" placeholder="Last Name" id="lastname" name="lastname" />
+    <input type="text" value="" placeholder="Email" id="email" name="email"/>
+    <input type="text" value="" placeholder="Username" id="username" name="username"/>
+    <input type="password" value="" placeholder="Password" id="password" name="password" />
+    <input type="password" value="" placeholder="Confirm Password" id="cpassword" name="cpassword"/>
+    {% csrf_token %}
+    <h4 style="color:red;">{{message}}</h4>
+	<button type="submit" name="signup" value="Sign Up">Sign Up</button>
+</form>
+    
+    <button onclick="http://127.0.0.1:8000/login/"><a href="http://127.0.0.1:8000/login/" style="color:white;text-decoration:none;">
+				<h7 >Back</h7>
+			</a></button>
+</div>
+	</body>
+</html>

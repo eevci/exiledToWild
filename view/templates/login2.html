@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Exiled To Wild</title>
+	</head>
+	<body style="background:{{ MEDIA_URL }}wallpaper.png">
+		<div style="text-align:center;"><img src="{{ MEDIA_URL }}logo.png" ></div>
+		<form style="text-align:center;"  method="post" action="login_post/">
+			<h3>Username:<input type="text" name="username"></h3>
+			<h3>Password:<input type="password" name="password"></h3>
+			{% csrf_token %}
+			<input type="submit" name="login" value="login"/>
+		</form>
+		<div class="sign-up" style="text-align:center;margin-top:20px;">
+			<a href="http://127.0.0.1:8000/sign-up/" style="color:gray;text-decoration:none;">
+				<h7 >sign-up</h7>
+			</a>
+		</div>
+	</body>
+</html>
+
+
